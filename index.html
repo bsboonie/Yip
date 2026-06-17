@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- YIP! v4.0 — Two-yip trainer | 2026-06-17 | single-screen no-scroll, tap-to-play yips, pitch only. No fire/test/banner. -->
+<!-- YIP! v4.1 — Two-yip trainer | 2026-06-17 | button text Yip!/Yip!!, centered header. -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -22,7 +22,7 @@
   body { display:flex; flex-direction:column;
     padding:calc(env(safe-area-inset-top) + 16px) 18px calc(env(safe-area-inset-bottom) + 18px);
     max-width:560px; margin:0 auto; gap:14px; }
-  header { flex:0 0 auto; }
+  header { flex:0 0 auto; text-align:center; }
   .wordmark { font-weight:800; font-size:64px; letter-spacing:-2px; line-height:1; }
   .wordmark span { color:var(--accent); }
   .tagline { color:var(--muted); font-size:13px; margin-top:5px; }
@@ -68,8 +68,8 @@
   </header>
 
   <div class="yips" id="yips">
-    <button class="yip-btn" data-id="1">Yip<span class="num">1</span></button>
-    <button class="yip-btn" data-id="2">Yip<span class="num">2</span></button>
+    <button class="yip-btn" data-id="1">Yip<span class="num">!</span></button>
+    <button class="yip-btn" data-id="2">Yip<span class="num">!!</span></button>
   </div>
 
   <div class="pitch">
