@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- YIP! v4.1 — Two-yip trainer | 2026-06-17 | button text Yip!/Yip!!, centered header. -->
+<!-- YIP! v4.4 — Two-yip trainer | 2026-06-17 | welcome modal, generic tagline, BMC tip jar + tagline -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -59,12 +59,52 @@
   input[type=range]::-moz-range-thumb { width:28px; height:28px; border-radius:50%;
     background:var(--accent); cursor:pointer; border:3px solid var(--bg); }
   @media (prefers-reduced-motion:reduce){ .yip-btn.flash{animation:none;} *{transition:none!important;} }
+  .bmc { flex:0 0 auto; display:flex; flex-direction:column; align-items:center; gap:6px; padding-bottom:2px; }
+  .bmc-tagline { color:var(--muted); font-size:12px; letter-spacing:.2px; font-style:italic; }
+  .bmc a { display:inline-flex; align-items:center; gap:8px;
+    background:#1a2129; border:1px solid #2c3845; border-radius:12px;
+    padding:10px 20px; text-decoration:none;
+    color:#8a99a8; font-size:13px; font-weight:600; letter-spacing:.3px;
+    transition:border-color .15s, color .15s; }
+  .bmc a:hover { border-color:#ff5a3c; color:#eef3f7; }
+  .bmc a span { font-size:16px; }
+
+  /* welcome modal */
+  .modal-backdrop { position:fixed; inset:0; background:rgba(8,11,14,.78);
+    backdrop-filter:blur(3px); display:flex; align-items:center; justify-content:center;
+    z-index:50; padding:24px; }
+  .modal-backdrop.hidden { display:none; }
+  .modal { background:var(--panel); border:1px solid var(--line); border-radius:20px;
+    max-width:420px; width:100%; padding:26px 24px 22px; box-shadow:0 20px 60px rgba(0,0,0,.5); }
+  .modal h1 { font-size:26px; font-weight:800; letter-spacing:-1px; margin:0 0 4px; }
+  .modal h1 span { color:var(--accent); }
+  .modal p { color:var(--ink); font-size:14.5px; line-height:1.55; margin:14px 0; }
+  .modal ol { margin:0 0 16px; padding-left:20px; color:var(--ink); font-size:14.5px; line-height:1.6; }
+  .modal ol li { margin-bottom:6px; }
+  .modal ol b { color:var(--accent); }
+  .modal-close { width:100%; background:var(--accent); color:#0f1419; border:none;
+    border-radius:14px; padding:14px; font-weight:800; font-size:16px; letter-spacing:-.3px;
+    cursor:pointer; touch-action:manipulation; transition:transform .08s, opacity .12s; }
+  .modal-close:active { transform:scale(.98); opacity:.9; }
 </style>
 </head>
 <body>
+  <div class="modal-backdrop" id="welcomeModal">
+    <div class="modal">
+      <h1>Welcome to Yip<span>!</span></h1>
+      <p>Puppies learn bite inhibition from their littermates — a sharp yelp tells them "too hard." Yip! gives you that same sound on demand, so you can teach your pup the same way.</p>
+      <ol>
+        <li><b>Tap a Yip! button</b> the instant your puppy bites too hard.</li>
+        <li><b>Pull your hand away</b> and pause the play for a few seconds.</li>
+        <li><b>Adjust pitch</b> if your pup reacts more to higher or lower tones.</li>
+      </ol>
+      <button class="modal-close" id="closeModal">Got it, let's go</button>
+    </div>
+  </div>
+
   <header>
     <div class="wordmark">Yip<span>!</span></div>
-    <div class="tagline">Bite-inhibition trainer for Rosie</div>
+    <div class="tagline">Bite-inhibition trainer for puppies</div>
   </header>
 
   <div class="yips" id="yips">
@@ -78,6 +118,13 @@
       <input type="range" id="pitch" min="-6" max="12" step="1" value="0">
       <div class="slider-val" id="pitchVal">0 st</div>
     </div>
+  </div>
+
+  <div class="bmc">
+    <div class="bmc-tagline">Built by a fellow puppy parent — tips keep it free</div>
+    <a href="https://buymeacoffee.com/yiptrainer" target="_blank" rel="noopener">
+      <span>☕</span> Buy me a coffee
+    </a>
   </div>
 
 <script>
@@ -129,6 +176,16 @@ window.addEventListener('touchstart', function once(){ audio(); decode(1); decod
 if('serviceWorker' in navigator){
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(()=>{}));
 }
+
+const modal = document.getElementById('welcomeModal');
+const closeBtn = document.getElementById('closeModal');
+try {
+  if(localStorage.getItem('yip_welcomed')) modal.classList.add('hidden');
+} catch(e){}
+closeBtn.onclick = () => {
+  modal.classList.add('hidden');
+  try { localStorage.setItem('yip_welcomed', '1'); } catch(e){}
+};
 </script>
 </body>
 </html>
